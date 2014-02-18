@@ -62,6 +62,7 @@ quicklist.controller('gameController', function($scope, $http){
         timerInterval = setInterval(setTimer, 1000);
         $scope.newGame = false;
         $scope.gameOn = true;
+        $scope.instruction = "Put these " + $scope.actor + " movies in order by release date."
     };
 
     function loadMovies () {
