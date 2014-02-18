@@ -4,19 +4,13 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<title>movie game</title>
+		<title>Movie Timeline</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js">
 		</script>		
 		<script src="https://rawgithub.com/angular-ui/ui-sortable/angular1.2/src/sortable.js"></script>
-
-		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">		 -->
-		<!-- <script type="text/javascript" src="js/ui-bootstrap-tpls-0.9.0.min.js"></script>		 -->
 		<script type="text/javascript" src="js/movieGame.js"></script>
-
-		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">		 -->
-		<!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
   	<body ng-controller="gameController" ng-init="initializeGame()">
@@ -32,19 +26,22 @@
 		  				{{instruction}}
 		  			</div>
 		  			<div class="startGameButton" ng-click="startGame()" ng-show="newGame && !ajaxLoading" >Start Game</div>
-		  			<div ng-show="gameOn">
-			  			<div class="checkAnswersButton" ng-click="checkAnswers()"> Check your answers </div>
-			  			<div class="timer">{{timerMins}}:{{timerSecs}}</div>
-			  			<div class="checkAnswersDisplay"> You have {{numCorrect}} in the correct position.</div>
-			  			<div class="checkAnswersSpacer"> &nbsp; </div>
-			  		</div>
+					<div class="startGameButton" ng-click="playAgain()" ng-show="!newGame && !gameOn" >Play Again</div>
+		  			<div class="checkAnswersButton" ng-click="checkAnswers()" ng-show="gameOn"> Check your answers </div>
+		  			<div class="timer" ng-show="!newGame">{{timerMins}}:{{timerSecs}}</div>
 	  			</div>
   			</header>  			
-  			
-<!-- 			<ul ui-sortable="sortableOptions" ng-model="movies">
-				<li ng-repeat="movie in movies" class="movie">{{movie.title}}</li>
-			</ul>		 -->	
 			<div class="gameBoard">
+				<div class="checkAnswersDisplay"> 
+					<div class="centerTransform">
+						<div class="checkAnswersText"><span class="numCorrect">{{numCorrect}}</span> correct</div>
+						<div class="giveUpButton" ng-click="giveUp()">Give up?</div>
+					</div>
+				</div>
+	  			<div class="dateLine">
+	  				<div class="firstYear">{{firstYear}}</div>
+	  				<div class="lastYear">{{lastYear}}</div>
+	  			</div>
 				<div class="movieList">
 					<ul ui-sortable="sortableOptions" ng-model="movies">
 						<li ng-repeat="movie in movies" class="movie">
@@ -64,7 +61,7 @@
 						</li>
 					</ul>		
 				</div>
-				<div class="movieList">
+				<div class="movieList" ng-show="!gameOn">
 					<ul ng-model="movieAnswers">
 						<li ng-repeat="movie in movieAnswers" ng-class="{movie:true, correct:(movies[$index].id == movie.id), wrong:(movies[$index].id !== movie.id)}">
 							<div class="movieDate">{{movie.displayDate}}</div>

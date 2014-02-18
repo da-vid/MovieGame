@@ -37,62 +37,6 @@ a {
 	font-size: inherit;
 }
 
-.centerDiv
-{
-	/*
-	http://stackoverflow.com/questions/114543/how-to-center-a-div-in-a-div-horizontally/16144913#16144913
-	*/
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-direction: normal;
-    -moz-box-direction: normal;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -ms-flex-line-pack: distribute;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-
-.centerTable {
-	display: table;
-	width: 100%;
-	height: 100%;
-	margin: auto;
-	background-color: blue;
-}
-
-.vCenterText {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-	font-family: inherit;
-	font-size: inherit;
-	background-color: yellow;
-}
-
-.absoluteCenter {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-}
-
 .vCenterTransform { 
   margin: auto;
   position: absolute;
@@ -102,7 +46,15 @@ a {
           transform: translate(0,-50%);
 }
 
-/****** Body ******/
+.centerTransform { 
+  margin: auto;
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
 
 .main {
 	clear: both;
@@ -116,6 +68,8 @@ a {
 	top: 0; left: 0; bottom: 0; right: 0;
 }
 
+/****** Header ******/
+
 header {
 	width: 1000px;	
 	margin: auto;
@@ -128,6 +82,8 @@ header {
 
 .headerRight {
 	float: right;
+	height: 120px;
+	width: 400px;
 }
 
 .title {
@@ -151,17 +107,25 @@ header {
 	border-radius: 10px;
 	font-size: 20px;
 	font-family: VincentRegular, sans-serif;
-	background-color: #eee;
+	background-color: #FFFFCC;
+}
+
+.startGameButton:hover {
+	background-color: #FFFFDB;
 }
 
 .checkAnswersButton {
-	min-width: 350px;
+	width: 80%;
 	padding: 10px;
-	margin: 10px;
+	margin: 10px auto 10px auto;
 	border-radius: 10px;
-	font-size: 15px;
+	font-size: 20px;
 	font-family: VincentRegular, sans-serif;
-	background-color: #eee;
+	background-color: #CEE6CE;
+}
+
+.checkAnswersButton:hover {
+	background-color: #E2F0E2;
 }
 
 .instruction {
@@ -175,8 +139,67 @@ header {
 	font-family: subT, sans-serif;	
 }
 
+/****** Game Board ******/
+
 .gameBoard {
+	clear: both;
+	margin: auto;
 	margin-top: 100px;
+	position: relative;
+}
+
+.checkAnswersDisplay {
+	position: absolute;
+	top: 400px; left: 0; bottom: 0; right: 0;
+	border-radius: 10px;
+	background-color: #E0E0D2;
+	height: 140px;
+	width: 600px;
+	margin: auto;
+	z-index: 100;
+}
+
+.checkAnswersText {
+	font-size: 30px;
+	font-family: VincentRegular, sans-serif;
+}
+
+.giveUpButton {
+	padding: 5px;
+	border-radius: 5px;
+	background-color: #EBCCCC;
+	font-family: VincentRegular, sans-serif;
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.giveUpButton:hover {
+	background-color: #F3E0E0;
+}
+.numCorrect {
+	font-size: 50px;
+}
+
+.dateLine {
+	height: 25px;
+	width: 1100px;
+	margin: auto;
+}
+
+.firstYear {
+	float: left;
+	font-family: BelleRose, sans-serif;
+	font-size: 22px;
+	font-weight: bold;
+	line-height: 20px;
+}
+
+.lastYear {
+	float: right;
+	font-family: BelleRose, sans-serif;
+	font-size: 22px;	
+	font-weight: bold;
+	line-height: 20px;
 }
 
 ul {
@@ -187,16 +210,14 @@ ul {
 .movieList {
 	clear: both;
 	margin: auto;
-	width: 1190px;
-	/*background-color: yellow;*/
+	width: 1145px;
 }
 
 .movie {
 	float: left;
 	width: 170px;
 	border-radius: 6px;
-	/*border: 1px solid;*/
-	padding: 5px;
+	padding: 5px 2px 5px 2px;
 	margin: 2px;
 	background-color: #ddd;
 }
@@ -222,57 +243,17 @@ ul {
 	width: 154px;
 	min-height: 250px;
 	margin: auto;
-	/*background-color: red;*/
 }
 
 .movieDate {
-	font-size: 16px;
+	font-size: 20px;
 	font-family: VincentRegular, sans-serif;
 }
 
 .correct {
-	background-color: green;
+	background-color: #B2D1B2;
 }
 
 .wrong {
-	background-color: red;
+	background-color: #EBCCCC;
 }
-
-/****** Overriding Bootstrap Progress Bar ******/
-/*.progress {
-	margin-bottom: 5px;
-}
-
-.progress-bar {
-	white-space: nowrap;
-	-webkit-box-shadow: none;
-		box-shadow: none;
-	color: black;
-	text-align: left;
-	letter-spacing: 2px;
-}
-
-.progress-bar-warning {
-  background-color: #ccc;
-}
-
-.progress-bar-success {
-  background-color: #94BF94;
-}
-
-.roundBar .progress {
-	height: 15px;
-}
-.scoreBar .progress {
-	height: 30px;
-}
-
-.roundBar .progress-bar {
-	font-size: 15px;
-	line-height: 17px;
-}
-
-.scoreBar .progress-bar {
-	font-size: 20px;
-	line-height: 34px;
-}*/

@@ -2,10 +2,11 @@ var quicklist = angular.module('movieGame', ['ui.sortable']);
 
 quicklist.controller('gameController', function($scope, $http){
     $scope.actorList = ["Brad Pitt", "Julia Roberts", "Tom Hanks", "Harrison Ford", "Samuel Jackson", 
-        "George Clooney", "Jack Nicholson", "Bruce Willis", "Sean Connery", 
+        "George Clooney", "Jack Nicholson", "Bruce Willis", "Sean Connery", "John Cusack", "Billy Bob Thornton",
         "Robin Williams", "Morgan Freeman", "Denzel Washington", 
         "Tom Cruise", "Mel Gibson", "Russell Crowe", "Nicole Kidman", "Cate Blanchett", "Meryl Streep", 
-        "Kate Winslet", "Reese Witherspoon", "Scarlett Johannson", "Julianne Moore", "Helen Mirren"];
+        "Kate Winslet", "Reese Witherspoon", "Julianne Moore", "Helen Mirren"];
+
     $scope.movies = [];
     $scope.actor = "";
     $scope.movieAJAXList = {};
@@ -23,6 +24,11 @@ quicklist.controller('gameController', function($scope, $http){
     jQuery(".checkAnswersDisplay").hide();
     var timerInterval;
 
+    $scope.sortableOptions = {
+        update: function(e, ui) {
+            $scope.nothing = 1;
+        }
+    };
 
     $scope.initializeGame = function() {
         //Pick a random actor
@@ -32,37 +38,41 @@ quicklist.controller('gameController', function($scope, $http){
         getMovieCredits($scope.actor);
     };
 
-    function setTimer() {
-        ++timerTotalSecs;
-        $scope.timerSecs = timePad(timerTotalSecs%60);
-        $scope.timerMins = parseInt(timerTotalSecs/60);
-        $scope.$apply();
-    }
-
-    function stopTimer() {
-        clearInterval(timerInterval);
-    }
-
-    function timePad(val)
-    {
-        var valString = val + "";
-        if(valString.length < 2)
-        {
-            return "0" + valString;
-        }
-        else
-        {
-            return valString;
-        }
-    }
-
     $scope.startGame = function() {
         loadMovies(movieArraySize);
-        generateAnswers();        
+        generateAnswers();  
+        loadDateLine();      
         timerInterval = setInterval(setTimer, 1000);
         $scope.newGame = false;
         $scope.gameOn = true;
-        $scope.instruction = "Put these " + $scope.actor + " movies in order by release date."
+        $scope.instruction = "Click and drag to place these " + $scope.actor + " movies in order by release date.";
+    };
+
+    $scope.checkAnswers = function() {
+        $scope.numCorrect = 0;
+        for (var i=0; i<$scope.movies.length; i++) {
+            if ($scope.movies[i].id == $scope.movieAnswers[i].id) {
+                $scope.numCorrect++;
+            }
+        }
+
+        if ($scope.numCorrect == 6) {
+            $scope.instruction = "You got them all correct!";
+            endGame();
+        }
+        else {
+            jQuery(".checkAnswersDisplay").fadeIn(200).delay(1300).fadeOut(100);
+        }
+    };
+
+    $scope.giveUp = function() {
+        jQuery(".checkAnswersDisplay").hide();
+        $scope.instruction = "You gave up!";
+        endGame();
+    };
+
+    $scope.playAgain = function () {
+        location.reload();
     };
 
     function loadMovies () {
@@ -109,9 +119,8 @@ quicklist.controller('gameController', function($scope, $http){
             retVal = false;
         }
 
-        if(movie.character.toUpperCase() === "HIMSELF" || 
-           movie.character.toUpperCase() === "HERSELF" ||
-           movie.character.toUpperCase() === "NARRATOR" ||
+        if(movie.character.toUpperCase().indexOf("SELF") > -1 ||
+           movie.character.toUpperCase().indexOf("NARRAT") > -1 ||
            movie.character.toUpperCase().indexOf("UNCREDITED") > -1 ||
            movie.character.toUpperCase().indexOf("VOICE") > -1 ||
            movie.character.toUpperCase().indexOf("ARCHIVE") > -1) {
@@ -131,31 +140,16 @@ quicklist.controller('gameController', function($scope, $http){
         $scope.movieAnswers.sort(compareMoviesByDate);
     }
 
-    $scope.checkAnswers = function() {
-        $scope.numCorrect = 0;
-        for (var i=0; i<$scope.movies.length; i++) {
-            if ($scope.movies[i].id == $scope.movieAnswers[i].id) {
-                $scope.numCorrect++;
-            }
-        }
+    function loadDateLine() {
+        $scope.firstYear = $scope.movieAnswers[0].releaseDate.getFullYear();
+        $scope.lastYear = $scope.movieAnswers[movieArraySize-1].releaseDate.getFullYear();
+    }
 
-        if ($scope.numCorrect == 6) {
-            $scope.instruction = "You got them all correct!"
-            endGame();
-        }
-        else {
-            jQuery(".checkAnswersSpacer").hide();        
-            jQuery(".checkAnswersDisplay").fadeIn("slow", function() {
-                jQuery(".checkAnswersDisplay").fadeOut("slow", function() {
-                    jQuery(".checkAnswersSpacer").show();   
-                }); 
-            });
-        }
-    };
+
 
     function endGame() {
         stopTimer();
-        gameOn = false;
+        $scope.gameOn = false;
     }
 
     function compareMoviesByDate(a,b) {
@@ -165,25 +159,6 @@ quicklist.controller('gameController', function($scope, $http){
             return 1;
         return 0;
     }
-
-
-    $scope.sortableOptions = {
-        update: function(e, ui) {
-            $scope.nothing = 1;
-        }
-    };
-
-    getMovieCredits($scope.actorList[0]);
-    // // Game configuration
-    // $scope.maxRounds = 5;    
-    // numOptions = 3;    
-  
-    // $scope.startGame = function() {
-    //     $scope.round = 0;
-    //     $scope.score = 0;
-    //     shownCities.length = 0;
-    //     $scope.beginRound();
-    // };
 
     function getMovieCredits (actor){
         $scope.ajaxLoading = true;
@@ -215,5 +190,27 @@ quicklist.controller('gameController', function($scope, $http){
             $scope.status=status;
             //TODO more intelligent error handling
         });
+    }
+
+    function setTimer() {
+        ++timerTotalSecs;
+        $scope.timerSecs = timePad(timerTotalSecs%60);
+        $scope.timerMins = parseInt(timerTotalSecs/60);
+        $scope.$apply();
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+
+    function timePad(val)
+    {
+        var valString = val + "";
+        if(valString.length < 2) {
+            return "0" + valString;
+        }
+        else {
+            return valString;
+        }
     }
 });
