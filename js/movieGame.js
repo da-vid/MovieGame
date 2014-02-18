@@ -5,7 +5,8 @@ quicklist.controller('gameController', function($scope, $http){
         "George Clooney", "Jack Nicholson", "Bruce Willis", "Sean Connery", "John Cusack", "Billy Bob Thornton",
         "Robin Williams", "Morgan Freeman", "Denzel Washington", "Ben Affleck", "Matt Damon",
         "Tom Cruise", "Mel Gibson", "Russell Crowe", "Nicole Kidman", "Cate Blanchett", "Meryl Streep", 
-        "Kate Winslet", "Reese Witherspoon", "Julianne Moore", "Helen Mirren", "Jessica Alba"];
+        "Kate Winslet", "Reese Witherspoon", "Julianne Moore", "Helen Mirren", "Jessica Alba", "Adam Sandler",
+        "Steve Martin", "John Goodman", "Bill Murray"];
 
     $scope.movies = [];
     $scope.actor = "";
