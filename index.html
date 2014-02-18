@@ -1,21 +1,82 @@
 <!doctype html>
-<html ng-app="weatherGame">
+<html ng-app="movieGame">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<title>movie game</title>
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js">
+		</script>		
+		<script src="https://rawgithub.com/angular-ui/ui-sortable/angular1.2/src/sortable.js"></script>
+
 		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">		 -->
 		<!-- <script type="text/javascript" src="js/ui-bootstrap-tpls-0.9.0.min.js"></script>		 -->
 		<script type="text/javascript" src="js/movieGame.js"></script>
+
 		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">		 -->
 		<!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
-		<!-- <link rel="stylesheet" type="text/css" href="css/main.css"> -->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
-  	<body ng-controller="gameController">
+  	<body ng-controller="gameController" ng-init="initializeGame()">
   		<div class="main">	  		
-			
+  			<header>
+  				<div class="headerLeft">
+		  			<div class="title">MOVIE TIMELINE</div>
+		  			<div class="starring">Starring</div>
+		  			<div class="star">{{actor}}</div>
+	  			</div>
+	  			<div class="headerRight">
+		  			<div class="instruction"> 
+		  				{{instruction}}
+		  			</div>
+		  			<div class="startGameButton" ng-click="startGame()" ng-show="newGame && !ajaxLoading" >Start Game</div>
+		  			<div ng-show="gameOn">
+			  			<div class="checkAnswersButton" ng-click="checkAnswers()"> Check your answers </div>
+			  			<div class="timer">{{timerMins}}:{{timerSecs}}</div>
+			  			<div class="checkAnswersDisplay"> You have {{numCorrect}} in the correct position.</div>
+			  			<div class="checkAnswersSpacer"> &nbsp; </div>
+			  		</div>
+	  			</div>
+  			</header>  			
+  			
+<!-- 			<ul ui-sortable="sortableOptions" ng-model="movies">
+				<li ng-repeat="movie in movies" class="movie">{{movie.title}}</li>
+			</ul>		 -->	
+			<div class="gameBoard">
+				<div class="movieList">
+					<ul ui-sortable="sortableOptions" ng-model="movies">
+						<li ng-repeat="movie in movies" class="movie">
+							<div class="movieHeader">
+								<div class="movieTitle">
+									{{movie.title}}
+								</div> 
+								<div class="movieCharacter">
+										as {{movie.character}}
+								</div> 
+							</div>	
+							<div class="moviePoster">
+								<div class="vCenterTransform">						
+									<img src="{{movie.posterPath}}">
+								</div>
+							</div>
+						</li>
+					</ul>		
+				</div>
+				<div class="movieList">
+					<ul ng-model="movieAnswers">
+						<li ng-repeat="movie in movieAnswers" ng-class="{movie:true, correct:(movies[$index].id == movie.id), wrong:(movies[$index].id !== movie.id)}">
+							<div class="movieDate">{{movie.displayDate}}</div>
+							<div class="moviePoster" ng-hide="numCorrect == movies.length">
+								<div class="vCenterTransform">						
+									<img src="{{movie.posterPath}}">
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>	
+			</div>
 		</div>
 	</body>
 </html>
