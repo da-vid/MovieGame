@@ -3,9 +3,9 @@ var quicklist = angular.module('movieGame', ['ui.sortable']);
 quicklist.controller('gameController', function($scope, $http){
     $scope.actorList = ["Brad Pitt", "Julia Roberts", "Tom Hanks", "Harrison Ford", "Samuel Jackson", 
         "George Clooney", "Jack Nicholson", "Bruce Willis", "Sean Connery", "John Cusack", "Billy Bob Thornton",
-        "Robin Williams", "Morgan Freeman", "Denzel Washington", 
+        "Robin Williams", "Morgan Freeman", "Denzel Washington", "Ben Affleck", "Matt Damon",
         "Tom Cruise", "Mel Gibson", "Russell Crowe", "Nicole Kidman", "Cate Blanchett", "Meryl Streep", 
-        "Kate Winslet", "Reese Witherspoon", "Julianne Moore", "Helen Mirren"];
+        "Kate Winslet", "Reese Witherspoon", "Julianne Moore", "Helen Mirren", "Jessica Alba"];
 
     $scope.movies = [];
     $scope.actor = "";
@@ -33,7 +33,7 @@ quicklist.controller('gameController', function($scope, $http){
     $scope.initializeGame = function() {
         //Pick a random actor
         $scope.actor = $scope.actorList[Math.floor(Math.random() * $scope.actorList.length)];
-        $scope.instruction = "Test your recollection of " + $scope.actor + "'s career!";
+        $scope.instruction = "Think you know " + $scope.actor + "'s movies?";
         //Get the actor's credits
         getMovieCredits($scope.actor);
     };
