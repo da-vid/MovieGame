@@ -63,7 +63,7 @@ a {
 	border-color: black;
 	width: 95%;
 	min-height: 430px;
-	overflow: auto;
+	overflow: visible;
 	margin: auto;
 	top: 0; left: 0; bottom: 0; right: 0;
 }
@@ -73,7 +73,7 @@ a {
 header {
 	width: 1000px;	
 	margin: auto;
-	margin-top: 10px;
+	margin-top: 40px;
 }
 
 .headerLeft {
@@ -81,9 +81,13 @@ header {
 }
 
 .headerRight {
+	position: relative;
+	top: -10px;
 	float: right;
 	height: 120px;
 	width: 400px;
+	margin: auto;
+	text-align: center;
 }
 
 .title {
@@ -102,7 +106,7 @@ header {
 }
 
 .startGameButton {
-	padding: 10px;
+	padding: 12px;
 	margin: 10px;
 	border-radius: 10px;
 	font-size: 20px;
@@ -111,12 +115,28 @@ header {
 }
 
 .startGameButton:hover {
-	background-color: #FFFFDB;
+	background-color: #FFFFEB;
+	cursor: pointer;
+}
+
+.startOverButton {
+	width: 60%;
+	padding: 5px;
+	margin: 8px auto 0 auto;
+	border-radius: 10px;
+	font-size: 15px;
+	font-family: VincentRegular, sans-serif;
+	background-color: #E6E6E6;
+}
+
+.startOverButton:hover {
+	background-color: #eee;
+	cursor: pointer;
 }
 
 .checkAnswersButton {
 	width: 80%;
-	padding: 10px;
+	padding: 12px;
 	margin: 10px auto 10px auto;
 	border-radius: 10px;
 	font-size: 20px;
@@ -126,6 +146,7 @@ header {
 
 .checkAnswersButton:hover {
 	background-color: #E2F0E2;
+	cursor: pointer;
 }
 
 .instruction {
@@ -136,7 +157,8 @@ header {
 
 .timer {
 	font-size: 20px;
-	font-family: subT, sans-serif;	
+	font-family: subT, sans-serif;
+	color: #bbb;
 }
 
 /****** Game Board ******/
@@ -152,7 +174,7 @@ header {
 	position: absolute;
 	top: 400px; left: 0; bottom: 0; right: 0;
 	border-radius: 10px;
-	background-color: #E0E0D2;
+	background-color: #FFFFFF;
 	height: 140px;
 	width: 600px;
 	margin: auto;
@@ -165,7 +187,7 @@ header {
 }
 
 .giveUpButton {
-	padding: 5px;
+	padding: 10px 60px 10px 60px;
 	border-radius: 5px;
 	background-color: #EBCCCC;
 	font-family: VincentRegular, sans-serif;
@@ -175,13 +197,14 @@ header {
 
 .giveUpButton:hover {
 	background-color: #F3E0E0;
+	cursor: pointer;
 }
 .numCorrect {
 	font-size: 50px;
 }
 
 .dateLine {
-	height: 25px;
+	height: 30px;
 	width: 1100px;
 	margin: auto;
 }
@@ -210,7 +233,7 @@ ul {
 .movieList {
 	clear: both;
 	margin: auto;
-	width: 1155px;
+	width: 1160px;
 }
 
 .movie {
@@ -223,7 +246,7 @@ ul {
 }
 
 .movieHeader {
-	min-height: 60px
+	min-height: 65px
 }
 
 .movieTitle {
@@ -233,7 +256,7 @@ ul {
 
 .movieCharacter {
 	position: relative;
-	font-size: 16px;
+	font-size: 18px;
 	font-family: BelleRose, sans-serif;	
 	line-height: 18px;
 }

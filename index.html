@@ -22,13 +22,14 @@
 		  			<div class="star">{{actor}}</div>
 	  			</div>
 	  			<div class="headerRight">
-		  			<div class="instruction"> 
-		  				{{instruction}}
-		  			</div>
-		  			<div class="startGameButton" ng-click="startGame()" ng-show="newGame && !ajaxLoading" >Start Game</div>
-					<div class="startGameButton" ng-click="playAgain()" ng-show="!newGame && !gameOn" >Play Again</div>
-		  			<div class="checkAnswersButton" ng-click="checkAnswers()" ng-show="gameOn"> Check your answers </div>
-		  			<div class="timer" ng-show="!newGame">{{timerMins}}:{{timerSecs}}</div>
+			  			<div class="instruction"> 
+			  				{{instruction}}
+			  			</div>
+			  			<div class="startGameButton" ng-click="startGame()" ng-show="newGame && !ajaxLoading" >Start Game</div>
+			  			<div class="startOverButton" ng-click="playAgain()" ng-show="newGame && !ajaxLoading" >I want a different star!</div>
+						<div class="startGameButton" ng-click="playAgain()" ng-show="!newGame && !gameOn" >Play Again</div>
+			  			<div class="checkAnswersButton" ng-click="checkAnswers()" ng-show="gameOn"> Check your answers </div>
+			  			<div class="timer" ng-show="!newGame">{{timerMins}}:{{timerSecs}}</div>
 	  			</div>
   			</header>  			
 			<div class="gameBoard">
