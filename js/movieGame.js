@@ -1,6 +1,6 @@
-var quicklist = angular.module('movieGame', ['ui.sortable']);
+var movieGame = angular.module('movieGame', ['ui.sortable']);
 
-quicklist.controller('gameController', function($scope, $http){
+movieGame.controller('gameController', function($scope, movieDB){
     $scope.actorList = ["Brad Pitt", "Julia Roberts", "Tom Hanks", "Harrison Ford", "Samuel Jackson", 
         "George Clooney", "Jack Nicholson", "Bruce Willis", "Sean Connery", "John Cusack", "Billy Bob Thornton",
         "Robin Williams", "Morgan Freeman", "Denzel Washington", "Ben Affleck", "Matt Damon",
@@ -163,21 +163,10 @@ quicklist.controller('gameController', function($scope, $http){
 
     function getMovieCredits (actor){
         $scope.ajaxLoading = true;
-        apiKey = "9978f0a8e6ec85a080f9a841e3bbf7e3";
-        $http({method: 'GET', 
-            url: "https://api.themoviedb.org/3/search/person?api_key=" + apiKey + "&query=" + encodeURIComponent(actor), 
-            headers: {
-                "Accept":"application/json"
-            }
-        })
+        movieDB.getActorID(actor)
         .success(function(data, status, headers, config) {
             actorID = data.results[0].id;
-            $http({method: 'GET', 
-                url: "https://api.themoviedb.org/3/person/" + actorID +"/movie_credits?api_key=" + apiKey, 
-                headers: {
-                    "Accept":"application/json"
-                }
-            })
+            movieDB.getActorCredits(actorID)
             .success(function(data, status, headers, config) {
                 $scope.movieAJAXList = data.cast;
                 $scope.ajaxLoading = false;
@@ -192,6 +181,7 @@ quicklist.controller('gameController', function($scope, $http){
             //TODO more intelligent error handling
         });
     }
+
 
     function setTimer() {
         ++timerTotalSecs;
@@ -215,3 +205,32 @@ quicklist.controller('gameController', function($scope, $http){
         }
     }
 });
+
+movieGame.service('movieDB', function($http) {    
+    apiKey = "9978f0a8e6ec85a080f9a841e3bbf7e3";     
+    this.getActorID = function(actor) {               
+        return $http({method: 'GET', 
+            url: "https://api.themoviedb.org/3/search/person?api_key=" + apiKey + "&query=" + encodeURIComponent(actor), 
+            headers: {
+                "Accept":"application/json"
+            }
+        });
+    };
+    this.getActorCredits = function(actorID) {
+        return $http({method: 'GET', 
+            url: "https://api.themoviedb.org/3/person/" + actorID +"/movie_credits?api_key=" + apiKey, 
+            headers: {
+                "Accept":"application/json"
+            }
+        });
+    };
+});
+
+
+
+
+
+
+
+
+
